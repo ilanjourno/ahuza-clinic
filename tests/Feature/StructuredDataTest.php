@@ -37,6 +37,7 @@ class StructuredDataTest extends TestCase
         $physician = $graph->firstWhere('@type', 'Physician');
         $this->assertSame('Dr Claude Allouche', $physician['name']);
         $this->assertSame('+972-58-726-0264', $physician['telephone']);
+        $this->assertSame('Raanana', $physician['address']['addressLocality']);
         $this->assertEqualsCanonicalizing(
             ['Raanana', 'Netanya'],
             $graph->where('@type', 'MedicalClinic')->pluck('address.addressLocality')->all()
@@ -54,6 +55,7 @@ class StructuredDataTest extends TestCase
         $this->assertSame('fr', $data['inLanguage']);
         $this->assertStringStartsWith('2025-02-23T17:18:35', $data['datePublished']);
         $this->assertSame('Physician', $data['author']['@type']);
+        $this->assertSame('Dr Claude Allouche', $data['publisher']['name']);
     }
 
     public function test_script_tags_in_titles_cannot_break_out_of_the_json_ld_block(): void

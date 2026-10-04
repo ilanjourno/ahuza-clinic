@@ -61,6 +61,8 @@ class ArticleController extends Controller
         if ($request->has('traductions')) {
             $article->traductions()->delete();
             $article->traductions()->createMany($request->traductions);
+            // Translation-only edits must still refresh updated_at (dateModified, sitemap lastmod).
+            $article->touch();
         }
 
         $article->categories()->sync($request->category_ids);

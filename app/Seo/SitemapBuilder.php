@@ -34,7 +34,9 @@ class SitemapBuilder
         }
 
         Article::published()->with('traductions')->get()->each(function (Article $article) use ($sitemap) {
-            $translations = $article->traductions->unique('langue');
+            $translations = $article->traductions
+                ->filter(fn ($translation) => in_array($translation->langue, SetLocale::LOCALES, true))
+                ->unique('langue');
             $locales = $translations->pluck('langue')->all();
             $path = "/articles/{$article->slug}";
 
@@ -57,6 +59,11 @@ class SitemapBuilder
     {
         foreach ($locales as $locale) {
             $url->addAlternate(url("/{$locale}{$path}"), $locale);
+        }
+
+        if ($locales !== []) {
+            $default = in_array('fr', $locales, true) ? 'fr' : $locales[0];
+            $url->addAlternate(url("/{$default}{$path}"), 'x-default');
         }
 
         return $url;

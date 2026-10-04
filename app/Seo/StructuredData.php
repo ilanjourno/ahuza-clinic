@@ -40,6 +40,7 @@ class StructuredData
                     'telephone' => self::PHONE,
                     'email' => self::EMAIL,
                     'medicalSpecialty' => ['Gynecologic', 'Obstetric'],
+                    'address' => self::address('Raanana', 'Hamasger 8'),
                     'sameAs' => self::SAME_AS,
                     'hospitalAffiliation' => [
                         '@type' => 'Hospital',
@@ -91,7 +92,11 @@ class StructuredData
                 'name' => 'Dr Claude Allouche',
                 'url' => url("/{$locale}"),
             ],
-            'publisher' => ['@id' => self::physicianId()],
+            'publisher' => [
+                '@type' => 'Physician',
+                '@id' => self::physicianId(),
+                'name' => 'Dr Claude Allouche',
+            ],
         ], fn ($value) => $value !== null && $value !== '');
     }
 

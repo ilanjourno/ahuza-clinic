@@ -72,4 +72,22 @@ class SitemapTest extends TestCase
 
         $this->assertStringContainsString('/articles/nouveau', $this->get('/sitemap.xml')->getContent());
     }
+
+    public function test_sitemap_adds_an_x_default_alternate_pointing_to_fr(): void
+    {
+        $this->article('bilingue', now()->subDay(), ['en', 'fr']);
+
+        $xml = $this->get('/sitemap.xml')->getContent();
+
+        $this->assertStringContainsString('hreflang="x-default" href="http://localhost/fr/articles/bilingue"', $xml);
+    }
+
+    public function test_sitemap_x_default_falls_back_to_the_first_available_locale(): void
+    {
+        $this->article('anglais', now()->subDay(), ['en']);
+
+        $xml = $this->get('/sitemap.xml')->getContent();
+
+        $this->assertStringContainsString('hreflang="x-default" href="http://localhost/en/articles/anglais"', $xml);
+    }
 }
