@@ -44,6 +44,7 @@ export default function Main() {
                                     <Image
                                         src={whatsapp}
                                         width={30}
+                                        alt=""
                                         className="ms-1 mb-1"
                                     />
                                 </a>
@@ -58,12 +59,13 @@ export default function Main() {
                             <div className="position-relative">
                                 <img
                                     src={Youtube}
-                                    alt="video"
+                                    alt={t("video")}
                                     className="img-fluid rounded-3"
                                     width="837"
                                 />
                                 <a
                                     href="https://www.youtube.com/watch?si=KRTh4j0eSW5pJebF&v=gwCh30H7D3U&feature=youtu.be"
+                                    aria-label={t("video")}
                                     target="_blank"
                                     className="play-btn glightbox position-absolute top-50 start-50 translate-middle icon-shape icon-xl rounded-circle text-primary"
                                 >

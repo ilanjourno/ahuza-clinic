@@ -55,9 +55,9 @@ export default function Services() {
                                             </div>
                                         </div>
                                         <div className="ms-4">
-                                            <h4 className="mb-0">
+                                            <h3 className="h4 mb-0">
                                                 {t("clinic.tabs1.title")}
-                                            </h4>
+                                            </h3>
                                             <p className="mb-0 mt-lg-3 d-none d-lg-block">
                                                 {t("clinic.tabs1.description")}
                                             </p>
@@ -84,9 +84,9 @@ export default function Services() {
                                             </div>
                                         </div>
                                         <div className="ms-4">
-                                            <h4 className="mb-0">
+                                            <h3 className="h4 mb-0">
                                                 {t("clinic.tabs2.title")}
-                                            </h4>
+                                            </h3>
                                             <p className="mb-0 mt-lg-3 d-none d-lg-block">
                                                 {t("clinic.tabs2.description")}
                                             </p>
@@ -114,9 +114,9 @@ export default function Services() {
                                             </div>
                                         </div>
                                         <div className="ms-4">
-                                            <h4 className="mb-0">
+                                            <h3 className="h4 mb-0">
                                                 {t("clinic.tabs3.title")}
-                                            </h4>
+                                            </h3>
                                             <p className="mb-0 mt-lg-3 d-none d-lg-block">
                                                 {t("clinic.tabs3.description")}
                                             </p>

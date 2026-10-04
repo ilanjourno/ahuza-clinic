@@ -43,7 +43,7 @@ const FlagSelect = () => {
                             locale === lang.code ? "1" : "0.6")
                     }
                 >
-                    <Flag lang={lang.code} />
+                    <Flag lang={lang.code} alt={lang.label} />
                 </a>
             ))}
         </div>

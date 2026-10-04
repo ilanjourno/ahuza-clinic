@@ -6,9 +6,10 @@ import HebrewFlag from "@/Assets/svg/israel-flag.svg";
 
 interface FlagProps {
     lang: string;
+    alt?: string;
 }
 
-const Flag: FC<FlagProps> = ({ lang }) => {
+const Flag: FC<FlagProps> = ({ lang, alt }) => {
     return (
         <Image
             src={
@@ -18,7 +19,7 @@ const Flag: FC<FlagProps> = ({ lang }) => {
                     ? EnglishFlag
                     : HebrewFlag
             }
-            alt="Flag"
+            alt={alt ?? lang}
             width={40}
             height={16}
         />

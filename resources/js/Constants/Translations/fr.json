@@ -79,5 +79,6 @@
         "byline": "Par le Dr Claude Allouche, gynécologue-obstétricien",
         "published": "Publié le %{date}",
         "updated": "Mis à jour le %{date}"
-    }
+    },
+    "video": "Voir la vidéo de présentation du Dr Claude Allouche"
 }

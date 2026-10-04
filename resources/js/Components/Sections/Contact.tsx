@@ -166,7 +166,7 @@ export default function Contact() {
                                 </svg>
                             </div>
                             <div className="ms-2">
-                                <h5 className="mb-0">{t("contact.address")}</h5>
+                                <h4 className="h5 mb-0">{t("contact.address")}</h4>
                                 <small className="d-block">
                                     {t("contact.addressRaanana")}
                                 </small>
@@ -189,7 +189,7 @@ export default function Contact() {
                                 </svg>
                             </div>
                             <div className="ms-2">
-                                <h5 className="mb-0">{t("contact.phone")}</h5>
+                                <h4 className="h5 mb-0">{t("contact.phone")}</h4>
                                 <small>
                                     <a
                                         href={whatsappUrl(t("whatsapp.message"))}
@@ -214,7 +214,7 @@ export default function Contact() {
                                 </svg>
                             </div>
                             <div className="ms-2">
-                                <h5 className="mb-0">{t("contact.email")}</h5>
+                                <h4 className="h5 mb-0">{t("contact.email")}</h4>
 
                                 <small>
                                     <a
@@ -229,6 +229,7 @@ export default function Contact() {
                         <div className="d-flex gap-2">
                             <a
                                 href="https://www.facebook.com/DrAllouche2020"
+                                aria-label="Facebook"
                                 className="btn btn-facebook btn-icon"
                             >
                                 <svg
@@ -244,6 +245,7 @@ export default function Contact() {
                             </a>
                             <a
                                 href="https://www.linkedin.com/in/claude-allouche-776ba719b/"
+                                aria-label="LinkedIn"
                                 target="_blank"
                                 className="text-reset btn btn-linkedin btn-icon"
                             >

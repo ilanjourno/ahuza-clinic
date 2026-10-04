@@ -14,7 +14,7 @@ const Footer: FC = () => {
                         <div className="small my-3 mb-lg-0">
                             Copyright © 2024{" "}
                             <span className="text-primary">
-                                <a href="#">Claude Allouche</a>
+                                <a href="#" className="text-decoration-underline">Claude Allouche</a>
                             </span>
                         </div>
                     </Col>
@@ -23,6 +23,7 @@ const Footer: FC = () => {
                             <div className="ms-3 d-flex gap-2">
                                 <a
                                     href="https://www.facebook.com/DrAllouche2020"
+                                    aria-label="Facebook"
                                     className="btn btn-facebook btn-icon"
                                 >
                                     <svg
@@ -38,6 +39,7 @@ const Footer: FC = () => {
                                 </a>
                                 <a
                                     href="https://www.linkedin.com/in/claude-allouche-776ba719b/"
+                                    aria-label="LinkedIn"
                                     target="_blank"
                                     className="text-reset btn btn-linkedin btn-icon"
                                 >

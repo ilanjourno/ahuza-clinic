@@ -63,7 +63,7 @@ const ArticleShow: FC<
                                     )}
                                 </p>
                             </header>
-                            <article
+                            <article className="article-body"
                                 dangerouslySetInnerHTML={{
                                     __html: demoteHeadings(traduction.article),
                                 }}

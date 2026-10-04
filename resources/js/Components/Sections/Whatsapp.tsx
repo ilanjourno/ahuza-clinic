@@ -15,6 +15,7 @@ export default function Whatsapp() {
                             <Image
                                 src={whatsapp}
                                 width={130}
+                                alt=""
                                 className="mb-5"
                             />
                             <h2 className="h1 text-white-stable text-uppercase">

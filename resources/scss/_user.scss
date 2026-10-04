@@ -5,3 +5,14 @@
   object-fit: cover;
   object-position: top;
 }
+
+// Links inside running text must not rely on color alone (WCAG 1.4.1).
+.accordion-body a,
+.article-body a {
+  text-decoration: underline;
+}
+
+// Slate-500 labels on the light form card only reach 4.3:1.
+.form-label {
+  color: $gray-700;
+}

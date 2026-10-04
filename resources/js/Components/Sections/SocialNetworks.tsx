@@ -19,6 +19,7 @@ export default function SocialNetworks() {
                                     <figure className="text-center">
                                         <a
                                             href="https://www.facebook.com/DrAllouche2020"
+                                            aria-label="Facebook"
                                             target="_blank"
                                         >
                                             <Icon name="facebook" />
@@ -29,6 +30,7 @@ export default function SocialNetworks() {
                                     <figure className="text-center">
                                         <a
                                             href="https://www.linkedin.com/in/claude-allouche-776ba719b/"
+                                            aria-label="LinkedIn"
                                             target="_blank"
                                         >
                                             <Icon name="linkedin" />
