@@ -66,4 +66,73 @@ class ImageUploadTest extends TestCase
 
         $this->assertSame(800, $this->storedWidth(File::firstOrFail()));
     }
+
+    public function test_replacing_an_image_deletes_the_previous_file_only_after_storing_the_new_one(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user)->post(route('dashboard.images.store'), ['label' => 'avant', 'file' => UploadedFile::fake()->image('avant.jpg', 800, 600)]);
+        $file = File::firstOrFail();
+        $old = $file->name;
+        Storage::assertExists($old);
+
+        $this->actingAs($user)
+            ->post(route('dashboard.images.update', $file), ['file' => UploadedFile::fake()->image('apres.jpg', 700, 500)])
+            ->assertSessionHasNoErrors();
+
+        $file->refresh();
+        $this->assertNotSame($old, $file->name);
+        Storage::assertMissing($old);
+        Storage::assertExists($file->name);
+    }
+
+    public function test_a_failed_replacement_keeps_the_previous_file(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user)->post(route('dashboard.images.store'), ['label' => 'avant', 'file' => UploadedFile::fake()->image('avant.jpg', 800, 600)]);
+        $file = File::firstOrFail();
+        $old = $file->name;
+
+        $this->mock(ImageOptimizer::class)->shouldReceive('optimize')->andThrow(new \RuntimeException('boom'));
+        $this->withoutExceptionHandling();
+
+        try {
+            $this->actingAs($user)->post(route('dashboard.images.update', $file), ['file' => UploadedFile::fake()->image('apres.jpg', 700, 500)]);
+            $this->fail('The replacement should have failed');
+        } catch (\RuntimeException) {
+        }
+
+        Storage::assertExists($old);
+        $this->assertSame($old, $file->fresh()->name);
+    }
+
+    public function test_label_only_update_keeps_the_stored_file(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user)->post(route('dashboard.images.store'), ['label' => 'avant', 'file' => UploadedFile::fake()->image('avant.jpg', 800, 600)]);
+        $file = File::firstOrFail();
+
+        $this->actingAs($user)->post(route('dashboard.images.update', $file), ['label' => 'apres'])->assertSessionHasNoErrors();
+
+        Storage::assertExists($file->fresh()->name);
+    }
+
+    public function test_gif_uploads_are_stored_unchanged(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->post(route('dashboard.images.store'), ['label' => 'gif', 'file' => UploadedFile::fake()->image('a.gif', 2000, 1000)])
+            ->assertSessionHasNoErrors();
+
+        $this->assertSame(2000, $this->storedWidth(File::firstOrFail()));
+    }
+
+    public function test_svg_uploads_pass_through_untouched(): void
+    {
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"/>';
+
+        $this->actingAs(User::factory()->create())
+            ->post(route('dashboard.images.store'), ['label' => 'svg', 'file' => UploadedFile::fake()->createWithContent('a.svg', $svg)])
+            ->assertSessionHasNoErrors();
+
+        $this->assertSame($svg, Storage::get(File::firstOrFail()->name));
+    }
 }

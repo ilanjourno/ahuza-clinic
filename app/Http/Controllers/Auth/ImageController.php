@@ -55,11 +55,16 @@ class ImageController extends Controller
 
         // If a new file is uploaded, process it
         if ($request->hasFile('file')) {
-            Storage::delete($image->name);
+            $previous = $image->name;
             $image->fill(File::attributesFor($request->file('file')));
         }
 
         $image->save();
+
+        // Only drop the old object once the new one is stored and referenced.
+        if (isset($previous) && $previous !== $image->name) {
+            Storage::delete($previous);
+        }
 
         return Redirect::back()->with('success', 'Article updated.');
     }
