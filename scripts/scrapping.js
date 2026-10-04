@@ -3,11 +3,20 @@ import fs from "fs";
 import path from "path";
 
 (async () => {
+    // Cookies de session Facebook, à fournir via l'environnement :
+    // FB_C_USER=... FB_XS=... node scripts/scrapping.js
+    const { FB_C_USER, FB_XS } = process.env;
+
+    if (!FB_C_USER || !FB_XS) {
+        console.error("Les variables FB_C_USER et FB_XS sont requises.");
+        process.exit(1);
+    }
+
     // Configuration des cookies
     const cookies = [
         {
             name: "c_user",
-            value: "100005932716041",
+            value: FB_C_USER,
             domain: ".facebook.com",
             path: "/",
             httpOnly: false,
@@ -16,7 +25,7 @@ import path from "path";
         },
         {
             name: "xs",
-            value: "14%3AC2_yzImbkqtpfw%3A2%3A1720352602%3A-1%3A11679%3A%3AAcVEVT51Nuf7S6C0dsj84m1ffHgJRNotdCLSxrVwGFw",
+            value: FB_XS,
             domain: ".facebook.com",
             path: "/",
             httpOnly: true,
