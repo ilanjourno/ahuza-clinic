@@ -3,26 +3,34 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
 class SetLocale
 {
+    /** Supported locales; the first one is the fallback. */
+    public const LOCALES = ['fr', 'en', 'he'];
+
     public function handle($request, Closure $next)
     {
-        $availableLocales = ['en', 'fr', 'he'];
         $sessionLocale = Session::get('locale');
-        $routeLocale = $request->route('locale') && in_array($request->route('locale'), $availableLocales) ? $request->route('locale') : null;
-        $locale = $routeLocale ?? $sessionLocale ?? $request->getPreferredLanguage($availableLocales);
-        
-        if (!$routeLocale && $request->segment(1)) {
-            return Redirect::to('/' . $locale . $request->getRequestUri());
+        $routeLocale = in_array($request->route('locale'), self::LOCALES, true) ? $request->route('locale') : null;
+        $locale = $routeLocale ?? $sessionLocale ?? $request->getPreferredLanguage(self::LOCALES);
+
+        if (! $routeLocale) {
+            $path = $request->path() === '/' ? '' : '/'.$request->path();
+            $query = $request->getQueryString();
+
+            return Redirect::to('/'.$locale.$path.($query ? '?'.$query : ''));
         }
-        
-        if($locale !== $sessionLocale) {
+
+        App::setLocale($locale);
+
+        if ($locale !== $sessionLocale) {
             Session::put('locale', $locale);
         }
-        
+
         return $next($request);
     }
 }

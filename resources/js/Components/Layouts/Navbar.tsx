@@ -67,7 +67,7 @@ const Navbar: FC<NavbarProps> = ({
                     >
                         <Offcanvas.Header closeButton>
                             <Offcanvas.Title id="offcanvasNavbarLabel">
-                                <Link href={route("welcome")}>
+                                <Link href={route("welcome", { locale })}>
                                     <Image src={Logo} alt="Logo" width={175} />
                                 </Link>
                             </Offcanvas.Title>
@@ -75,7 +75,7 @@ const Navbar: FC<NavbarProps> = ({
                         <Offcanvas.Body>
                             <div className="d-flex flex-column mt-3 mt-lg-0 align-items-center">
                                 <Button
-                                    href={route("welcome") + "/#contact"}
+                                    href={route("welcome", { locale }) + "#contact"}
                                     variant="light"
                                     size="sm"
                                     className="mx-2"
@@ -87,7 +87,7 @@ const Navbar: FC<NavbarProps> = ({
                                 <Nav.Item>
                                     <Nav.Link
                                         as={Link}
-                                        href={route("welcome") + "/#"}
+                                        href={route("welcome", { locale }) + "#"}
                                     >
                                         {t("navigation.home")}
                                     </Nav.Link>
@@ -95,7 +95,7 @@ const Navbar: FC<NavbarProps> = ({
                                 <Nav.Item>
                                     <Nav.Link
                                         as={Link}
-                                        href={route("welcome") + "/#about"}
+                                        href={route("welcome", { locale }) + "#about"}
                                     >
                                         {t("navigation.about")}
                                     </Nav.Link>
@@ -113,7 +113,7 @@ const Navbar: FC<NavbarProps> = ({
                                 <Nav.Item>
                                     <Nav.Link
                                         as={Link}
-                                        href={route("welcome") + "/#faq"}
+                                        href={route("welcome", { locale }) + "#faq"}
                                     >
                                         {t("navigation.faq")}
                                     </Nav.Link>
@@ -121,7 +121,7 @@ const Navbar: FC<NavbarProps> = ({
                                 <Nav.Item>
                                     <Nav.Link
                                         as={Link}
-                                        href={route("welcome") + "/#contact"}
+                                        href={route("welcome", { locale }) + "#contact"}
                                     >
                                         {t("navigation.contact")}
                                     </Nav.Link>
