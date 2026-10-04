@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\HasTraduction;
+use App\Seo\SitemapBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,6 +15,15 @@ class Article extends Model
     use HasFactory, HasTraduction, SoftDeletes;
 
     protected $fillable = ['illustration_id', 'title', 'slug', 'published_at'];
+
+    protected static function booted(): void
+    {
+        $refreshSitemap = fn () => SitemapBuilder::forget();
+
+        static::saved($refreshSitemap);
+        static::deleted($refreshSitemap);
+        static::restored($refreshSitemap);
+    }
 
     public function resolveRouteBinding($value, $field = null)
     {

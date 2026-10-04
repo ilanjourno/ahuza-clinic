@@ -42,9 +42,6 @@ RUN npm install && npm run build
 # Run database migrations
 RUN php artisan migrate --force
 
-# Generate sitemap.xml
-RUN php artisan sitemap:generate
-
 # Copy Supervisor configuration
 COPY ./docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 

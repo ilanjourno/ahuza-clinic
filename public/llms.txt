@@ -1,0 +1,21 @@
+# Dr Claude Allouche — Gynécologue-obstétricien
+
+> Site officiel du Dr Claude Allouche, gynécologue-obstétricien francophone en Israël. Consultations à Raanana (Clinic 4 You, Hamasger 8) et à Netanya (Migdal Hahaloutsim, 6 rehov Petah Tikva, 10e étage, salle 1002) ; accouchements et chirurgie à l'hôpital Laniado. Articles de santé de la femme en français, anglais et hébreu.
+
+## Pages principales
+
+- [Accueil (français)](https://claude-allouche.com/fr): parcours, services, FAQ, contact
+- [Home (English)](https://claude-allouche.com/en)
+- [דף הבית (עברית)](https://claude-allouche.com/he)
+- [Articles (français)](https://claude-allouche.com/fr/articles)
+- [Articles (English)](https://claude-allouche.com/en/articles)
+- [מאמרים (עברית)](https://claude-allouche.com/he/articles)
+
+## Contact
+
+- Téléphone et WhatsApp : +972 58-726-0264
+- E-mail : drallouchegyneco@gmail.com
+
+## Optional
+
+- [Sitemap](https://claude-allouche.com/sitemap.xml): liste complète des articles dans les trois langues

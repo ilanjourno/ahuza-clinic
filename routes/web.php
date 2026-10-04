@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\ContactController as AuthContactController;
 use App\Http\Controllers\Auth\KeywordGroupController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,7 @@ Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(funct
 require __DIR__.'/auth.php';
 require __DIR__.'/api.php';
 
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::middleware(SetLocale::class)->prefix('/{locale?}')->group(function () {
