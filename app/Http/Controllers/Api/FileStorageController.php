@@ -8,7 +8,6 @@ use App\Http\Resources\ImageCollection;
 use App\Models\File;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Storage;
 
 class FileStorageController extends Controller
 {
@@ -25,16 +24,6 @@ class FileStorageController extends Controller
 
     public function store(FileStoreRequest $request)
     {
-        $name = $request->file('file')->store();
-
-        $file = File::create([
-            'label' => $request->label,
-            'name' => $name,
-            'size' => $request->file('file')->getSize(),
-            'mime_type' => $request->file('file')->getMimeType(),
-            'link' => Storage::url($name),
-        ]);
-
-        return $file;
+        return File::store($request);
     }
 }
