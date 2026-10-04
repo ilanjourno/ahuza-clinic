@@ -11,11 +11,6 @@ class KeywordGroup extends Model
 
     protected $fillable = ['label'];
 
-    public function articles()
-    {
-        return $this->manyto(Article::class)->withTimestamps();
-    }
-
     public function keywords()
     {
         return $this->belongsToMany(Keyword::class)->withTimestamps();

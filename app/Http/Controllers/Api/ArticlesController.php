@@ -15,7 +15,7 @@ class ArticlesController extends Controller
             Article::with(['categories', 'illustration'])
             ->withTraductionInLocale()
             ->filter(Request::only('search'))
-            ->whereNot('published_at', null)
+            ->published()
             ->orderBy('published_at', 'desc')
             ->paginate(15)
         );

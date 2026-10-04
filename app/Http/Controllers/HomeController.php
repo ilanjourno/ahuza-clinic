@@ -22,7 +22,7 @@ class HomeController extends Controller
             'articles' => new ResourceCollection(
                 Article::with(['categories'])
                 ->withTraductionInLocale()
-                ->whereNot('published_at', null)
+                ->published()
                 ->orderBy('published_at', 'desc')
                 ->limit(3)->get()
             )

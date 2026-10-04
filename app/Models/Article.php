@@ -29,6 +29,11 @@ class Article extends Model
         });
     }
 
+    public function scopePublished(Builder $query)
+    {
+        return $query->whereNotNull('published_at')->where('published_at', '<=', now());
+    }
+
     public function illustration()
     {
         return $this->belongsTo(File::class);

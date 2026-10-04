@@ -23,7 +23,7 @@ const FAQ = () => {
                                 <h2>{t("faqs.title")}</h2>
                                 <p className="mb-0">
                                     {t("faqs.description")} <br />
-                                    <a href="#" className="text-primary">
+                                    <a href="#contact" className="text-primary">
                                         {t("faqs.contact")}
                                     </a>
                                 </p>

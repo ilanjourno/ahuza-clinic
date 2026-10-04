@@ -36,7 +36,7 @@ class FAQ extends Model
             )
         );
 
-        $query->when($filters['trashed'] ?? null, function ($query, bool $trashed) {
+        $query->when($filters['trashed'] ?? null, function ($query, string $trashed) {
             if ($trashed === 'with') {
                 $query->withTrashed();
             } elseif ($trashed === 'only') {

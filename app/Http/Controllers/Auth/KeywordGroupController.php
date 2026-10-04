@@ -48,7 +48,7 @@ class KeywordGroupController extends Controller
 
     public function update(KeywordGroup $keywordGroup, KeywordGroupStoreOrUpdateRequest $request): RedirectResponse {
         $keywordGroup->updateOrFail($request->validated());
-        $keywordGroup->keywords()->attach($request->keyword_ids);
+        $keywordGroup->keywords()->sync($request->keyword_ids);
 
         return Redirect::back()->with('success', 'Keyword group updated.');
     }
