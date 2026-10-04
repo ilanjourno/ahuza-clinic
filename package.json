@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "npx vite",
-        "build": "npx vite build && vite build --ssr"
+        "build": "npx vite build && vite build --ssr",
+        "test:js": "node --test \"resources/js/**/*.test.ts\""
     },
     "devDependencies": {
         "@headlessui/react": "^2.0.0",
