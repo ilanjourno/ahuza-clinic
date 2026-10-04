@@ -1,0 +1,335 @@
+{
+  "summary": {
+    "health_score": 44,
+    "business_type": "Cabinet médical local (YMYL) — gynécologue-obstétricien, 2 adresses (Raanana, Netanya), site trilingue fr/en/he",
+    "top_findings": [
+      "LCP très lent sur mobile (Performance (CWV))",
+      "Attribut lang faux et pas de RTL (Technical SEO)",
+      "hreflang des articles pointent vers l'accueil (Technical SEO)",
+      "38 liens internes en 404 (Technical SEO)",
+      "Pas de compression ni de cache navigateur (Technical SEO)"
+    ],
+    "quick_wins": [
+      "Corriger lang/dir dans app.blade.php via SetLocale",
+      "Rendre le titre d'article en H1",
+      "Masquer les drapeaux des traductions absentes (supprime 38 liens 404)",
+      "Remplacer la date codée en dur des cartes d'articles par published_at",
+      "Ajouter le JSON-LD Physician/MedicalClinic sur l'accueil"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 48,
+      "what_works": [
+        "Rendu serveur (Inertia SSR) : le contenu complet est dans le HTML initial",
+        "robots.txt propre, bloque /dashboard, déclare le sitemap",
+        "HTTP → HTTPS en 1 redirection",
+        "Sitemap de 254 URL, toutes en 200, avec lastmod et images",
+        "Canonicals présents et en absolu sur 254/255 pages"
+      ],
+      "findings": [
+        {
+          "title": "Attribut lang faux et pas de RTL",
+          "severity": "High",
+          "description": "Les 255 pages ont <html lang=\"en\">, y compris /fr et /he ; aucune page hébreu n'a dir=\"rtl\". app.blade.php lit app()->getLocale() alors que SetLocale ne fait que Session::put.",
+          "recommendation": "Appeler App::setLocale($locale) dans SetLocale et ajouter dir=\"rtl\" quand la locale est he."
+        },
+        {
+          "title": "hreflang des articles pointent vers l'accueil",
+          "severity": "High",
+          "description": "246 pages articles déclarent hreflang fr/en/he vers /fr, /en, /he (GuestLayout) au lieu des traductions de l'article ; aucun x-default.",
+          "recommendation": "Générer les alternates à partir des traductions existantes de l'article + x-default ; les ajouter aussi au sitemap (xhtml:link)."
+        },
+        {
+          "title": "38 liens internes en 404",
+          "severity": "High",
+          "description": "Les drapeaux de langue lient vers des traductions inexistantes (13 articles FR seuls, 12 sans hébreu) : 25 en /he, 13 en /en.",
+          "recommendation": "N'afficher que les langues disponibles pour l'article (ou renvoyer vers l'accueil de la langue)."
+        },
+        {
+          "title": "Pas de compression ni de cache navigateur",
+          "severity": "High",
+          "description": "HTML (140 Ko), CSS (431 Ko) et JS (328 Ko) servis sans gzip/brotli ; assets hashés sans Cache-Control. La prod tourne sur `php artisan serve` (serveur de dev PHP) via supervisord.",
+          "recommendation": "Servir via nginx + php-fpm (ou FrankenPHP) avec gzip/brotli et Cache-Control: public, max-age=31536000, immutable sur /build/assets."
+        },
+        {
+          "title": "Temps de réponse serveur irrégulier",
+          "severity": "Medium",
+          "description": "TTFB moyen 1,05 s sur 255 pages, pic à 5,97 s (rendu SSR + serveur mono-processus).",
+          "recommendation": "Même correctif que ci-dessus ; envisager min-instances=1 sur Cloud Run pour éviter les cold starts."
+        },
+        {
+          "title": "Accueil dupliqué sur /",
+          "severity": "Medium",
+          "description": "/ sert le contenu FR avec un canonical vers lui-même et figure dans le sitemap, en doublon de /fr.",
+          "recommendation": "Rediriger / vers la langue détectée (302) et déclarer / en x-default, ou canonical / → /fr ; retirer / du sitemap."
+        },
+        {
+          "title": "Sitemap figé entre deux déploiements",
+          "severity": "Medium",
+          "description": "Le sitemap est généré au build Docker ; la tâche planifiée quotidienne ne tourne pas (supervisord ne lance pas le scheduler). Les articles publiés entre deux déploiements n'y sont pas.",
+          "recommendation": "Régénérer le sitemap à la publication d'un article, ou lancer `schedule:work` dans supervisord."
+        },
+        {
+          "title": "Domaine www non résolu",
+          "severity": "Low",
+          "description": "www.claude-allouche.com ne résout pas en DNS.",
+          "recommendation": "Ajouter un enregistrement DNS www et rediriger en 301 vers le domaine nu."
+        },
+        {
+          "title": "En-têtes de sécurité absents",
+          "severity": "Low",
+          "description": "Pas de HSTS, CSP, X-Content-Type-Options, Referrer-Policy ; X-Powered-By: PHP/8.3 exposé.",
+          "recommendation": "Ajouter ces en-têtes au serveur web ; désactiver expose_php."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 58,
+      "what_works": [
+        "247 articles médicaux, médiane ~660 mots, jusqu'à 2 500 mots",
+        "70 articles disponibles dans les 3 langues",
+        "Parcours de l'auteur détaillé (formation, 25 ans à Évreux, Laniado)"
+      ],
+      "findings": [
+        {
+          "title": "Signaux E-E-A-T faibles sur les articles (YMYL)",
+          "severity": "High",
+          "description": "Les pages articles n'affichent ni auteur, ni date de publication/mise à jour, ni qualifications ; la carte d'article affiche « Nov 26, 2023 » codé en dur pour tous les articles et un lien auteur vers #.",
+          "recommendation": "Afficher sur chaque article : auteur (Dr Claude Allouche, gynécologue-obstétricien) avec lien vers une bio, date de publication et de mise à jour réelles ; corriger la date des cartes."
+        },
+        {
+          "title": "Mentions obsolètes « Ahuza » dans le contenu",
+          "severity": "High",
+          "description": "3 réponses de FAQ et la signature de plusieurs articles mentionnent encore la clinique Ahuza ; les mots-clés d'articles contiennent « Ahuza Clinic » ; les liens Google Maps des FAQ sont peut-être à mettre à jour.",
+          "recommendation": "Mettre à jour FAQ, articles et mots-clés depuis le dashboard (3 langues)."
+        },
+        {
+          "title": "Couverture linguistique incomplète",
+          "severity": "Medium",
+          "description": "13 articles uniquement en français, 12 sans version hébreu.",
+          "recommendation": "Prioriser la traduction hébreu des articles les plus consultés."
+        },
+        {
+          "title": "Pages courtes",
+          "severity": "Low",
+          "description": "18 articles sous 300 mots (gabarit compris), le plus court 144 mots (/he/articles/menopause1).",
+          "recommendation": "Étoffer ou fusionner les articles trop courts."
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 50,
+      "what_works": [
+        "Titres et meta descriptions présents sur toutes les pages",
+        "Titres d'articles uniques, suffixés « - Dr Claude Allouche »"
+      ],
+      "findings": [
+        {
+          "title": "Pas de H1 sur les articles",
+          "severity": "High",
+          "description": "233 des 247 pages articles n'ont aucun H1 (le titre n'est rendu que dans <title>) ; une page en a 3.",
+          "recommendation": "Rendre le titre de l'article en <h1> dans Articles/Show et démarrer le contenu en <h2>."
+        },
+        {
+          "title": "Meta descriptions trop longues ou dupliquées",
+          "severity": "Medium",
+          "description": "240/255 dépassent 160 caractères ; 36 groupes de doublons (17 pages FR reprennent le texte « À propos » faute de description).",
+          "recommendation": "Rédiger une description de 140–155 caractères par article ; tronquer proprement à défaut."
+        },
+        {
+          "title": "Titres trop longs",
+          "severity": "Medium",
+          "description": "126/255 titres dépassent 60 caractères et seront tronqués dans Google.",
+          "recommendation": "Raccourcir les titres d'articles (≈ 50 caractères avant le suffixe)."
+        },
+        {
+          "title": "Open Graph imprécis",
+          "severity": "Low",
+          "description": "og:type vaut « website » sur les articles ; og:locale vaut « fr »/« he » au lieu de fr_FR / he_IL / en_US.",
+          "recommendation": "og:type=article (+ article:published_time) et locales au format langue_PAYS."
+        },
+        {
+          "title": "Titre hébreu de l'accueil au féminin",
+          "severity": "Low",
+          "description": "« ד״ר קלוד אלוש - רופאת נשים מומחה » utilise « רופאת » (féminin).",
+          "recommendation": "Corriger la clé title de he.json en « רופא נשים מומחה »."
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 10,
+      "what_works": [],
+      "findings": [
+        {
+          "title": "Aucune donnée structurée",
+          "severity": "High",
+          "description": "0 page sur 255 contient du JSON-LD.",
+          "recommendation": "Ajouter Physician + MedicalClinic (2 adresses, téléphone, spécialité, langues parlées, sameAs Facebook/LinkedIn) sur l'accueil ; MedicalWebPage/Article avec author, datePublished, dateModified sur les articles ; FAQPage n'apporte plus de rich result mais reste lisible par les moteurs IA."
+        }
+      ]
+    },
+    {
+      "name": "Performance (CWV)",
+      "score": 30,
+      "what_works": [
+        "CLS faible (0,07 accueil, 0 article)",
+        "TBT faible (50 ms)"
+      ],
+      "findings": [
+        {
+          "title": "LCP très lent sur mobile",
+          "severity": "Critical",
+          "description": "Lighthouse mobile : accueil perf 54, FCP 7,7 s, LCP 16,3 s, 3,9 Mo ; article perf 55, FCP 9,0 s, LCP 9,9 s. Pas de données terrain CrUX (trafic insuffisant ou quota PSI épuisé).",
+          "recommendation": "Compression + cache (voir Technique), images optimisées, CSS allégé."
+        },
+        {
+          "title": "CSS et JS lourds",
+          "severity": "High",
+          "description": "CSS 422 Ko (thème complet : prism, swiper, plyr, docs…), 391 Ko de règles inutilisées ; JS 321 Ko dont 204 Ko inutilisés.",
+          "recommendation": "Retirer les modules SCSS non utilisés du thème, purger le CSS, découper le JS."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness",
+      "score": 45,
+      "what_works": [
+        "Contenu rendu côté serveur, lisible sans JavaScript",
+        "robots.txt n'exclut aucun crawler IA",
+        "Articles longs en format questions/réponses, citables"
+      ],
+      "findings": [
+        {
+          "title": "Entité médecin non structurée",
+          "severity": "High",
+          "description": "Sans JSON-LD ni page auteur, les moteurs IA ne relient pas les articles au Dr Allouche, à ses cabinets et à ses qualifications.",
+          "recommendation": "Schema Physician + page « À propos » dédiée avec diplômes, affiliations (Laniado, Clalit), langues."
+        },
+        {
+          "title": "Pas de llms.txt",
+          "severity": "Low",
+          "description": "/llms.txt renvoie une redirection puis 404.",
+          "recommendation": "Publier un llms.txt listant les pages clés (accueil, à propos, articles phares) dans les 3 langues."
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 40,
+      "what_works": [
+        "Nouvelles images du site optimisées (logo 44 Ko, photos clinique 115–215 Ko)"
+      ],
+      "findings": [
+        {
+          "title": "Illustrations d'articles non optimisées",
+          "severity": "High",
+          "description": "Sur l'accueil, deux illustrations d'articles pèsent 695 Ko et 546 Ko (JPEG originaux sur GCS) ; miniature YouTube 426 Ko.",
+          "recommendation": "Redimensionner/convertir en WebP à l'upload (ou via un service d'images) ; servir des tailles adaptées (srcset)."
+        },
+        {
+          "title": "Pas de lazy loading ni de dimensions",
+          "severity": "Medium",
+          "description": "Aucune image n'a loading=\"lazy\" ; images sans width/height (signalé par Lighthouse).",
+          "recommendation": "loading=\"lazy\" hors écran + width/height explicites."
+        },
+        {
+          "title": "Textes alternatifs manquants ou génériques",
+          "severity": "Low",
+          "description": "Icône WhatsApp sans alt (2 occurrences par page) ; « Flag », « Avatar » génériques sur toutes les pages ; liens sociaux sans nom accessible.",
+          "recommendation": "Alt descriptifs (ou alt=\"\" si décoratif) et aria-label sur les liens icônes."
+        }
+      ]
+    }
+  ],
+  "local_seo": {
+    "name": "Local SEO (hors score)",
+    "findings": [
+      {
+        "title": "Citations NAP obsolètes",
+        "severity": "High",
+        "description": "LinkedIn indique « Ahuza clinic Raanana » ; l'index Google affiche encore des titres « … - Ahuza » ; un annuaire français (mablouseblanche.fr) le place à Évreux ; « Clinic 4 You, Hamasger 8 » n'apparaît dans aucun annuaire.",
+        "recommendation": "Mettre à jour LinkedIn, Facebook et les annuaires ; demander la réindexation dans Google Search Console."
+      },
+      {
+        "title": "Fiches Google Business Profile à créer/mettre à jour",
+        "severity": "High",
+        "description": "Aucune fiche n'a été trouvée pour les nouvelles adresses (Raanana Hamasger 8, Netanya Migdal Hahaloutsim).",
+        "recommendation": "Une fiche GBP par cabinet, catégorie « Gynécologue-obstétricien », mêmes nom/adresse/téléphone que le site, lien vers la page de la langue."
+      },
+      {
+        "title": "Visibilité hébreu quasi nulle",
+        "severity": "Medium",
+        "description": "Aucun résultat pour « קלוד אלוש גינקולוג ».",
+        "recommendation": "Fiches GBP et annuaires israéliens (easy.co.il, B144) en hébreu."
+      }
+    ]
+  },
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1 : Correctifs critiques",
+        "timeframe": "Semaine 1",
+        "items": [
+          "Servir le site avec compression et cache (nginx/php-fpm ou FrankenPHP)",
+          "lang/dir corrects par langue",
+          "hreflang par article + x-default, drapeaux limités aux traductions existantes",
+          "H1 sur les articles",
+          "Fiches Google Business Profile pour les 2 cabinets, mise à jour LinkedIn/Facebook, réindexation GSC"
+        ]
+      },
+      {
+        "name": "Phase 2 : Améliorations à fort impact",
+        "timeframe": "Semaines 2-3",
+        "items": [
+          "JSON-LD Physician/MedicalClinic + Article/MedicalWebPage",
+          "Auteur, dates réelles et bio sur les articles",
+          "Retirer « Ahuza » des FAQ, articles et mots-clés",
+          "Optimisation des illustrations d'articles (WebP, srcset, lazy)",
+          "Redirection / → langue détectée, sitemap régénéré à la publication avec alternates"
+        ]
+      },
+      {
+        "name": "Phase 3 : Contenu et autorité",
+        "timeframe": "Mois 2",
+        "items": [
+          "Meta descriptions 140–155 car. et titres < 60 car.",
+          "Traduire en hébreu les 25 articles manquants",
+          "Alléger le CSS du thème",
+          "Annuaires israéliens en hébreu, llms.txt"
+        ]
+      },
+      {
+        "name": "Phase 4 : Suivi",
+        "timeframe": "Continu",
+        "items": [
+          "Google Search Console (couverture, hreflang, requêtes locales)",
+          "Core Web Vitals terrain (CrUX) une fois le trafic suffisant",
+          "Avis Google réguliers sur les 2 fiches"
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": null
+  },
+  "scope": {
+    "audited": "2026-10-04",
+    "pages_crawled": 293,
+    "html_200": 255,
+    "lighthouse_mobile": [
+      "/fr",
+      "/fr/articles/clinic4you-presentation"
+    ],
+    "limitations": [
+      "Pas de données Google Search Console / GA4 / CrUX",
+      "PageSpeed Insights indisponible (quota) : Lighthouse local avec throttling mobile simulé",
+      "Fiches Google Business Profile non vérifiables sans accès"
+    ]
+  }
+}
