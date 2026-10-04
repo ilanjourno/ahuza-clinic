@@ -1,12 +1,10 @@
-# Use the official PHP 8.3 image as the base image
+# nginx + PHP-FPM + Inertia SSR, all managed by supervisord
 FROM php:8.3-fpm
 
-# Set the working directory inside the container
 WORKDIR /app
 
 COPY .env .env
 
-# Install system dependencies, PostgreSQL driver, and Supervisor
 RUN apt-get update && apt-get install -y \
     curl \
     libpng-dev \
@@ -17,36 +15,30 @@ RUN apt-get update && apt-get install -y \
     git \
     nodejs \
     npm \
+    nginx \
     supervisor \
     libpq-dev \
-    && docker-php-ext-install pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd
+    && docker-php-ext-install pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd opcache \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# Copy the project files to the working directory
 COPY . .
 
-# Ensure correct permissions for the working directory
-RUN chown -R www-data:www-data /app
-
-# Install project dependencies
 RUN composer install --no-interaction --optimize-autoloader
 
-# Generate the application key
 RUN php artisan key:generate
 
-# Build the production assets
 RUN npm install && npm run build
 
-# Run database migrations
-RUN php artisan migrate --force
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/security-headers.conf /etc/nginx/security-headers.conf
+COPY docker/php.ini /usr/local/etc/php/conf.d/zz-app.ini
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Copy Supervisor configuration
-COPY ./docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# php-fpm runs as www-data and writes compiled views, cache and logs here
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Expose port 8080 for Cloud Run
 EXPOSE 8080
 
-# Start Supervisor
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

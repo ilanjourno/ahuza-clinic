@@ -18,6 +18,10 @@ steps:
   - name: "gcr.io/cloud-builders/docker"
     args:
       ["push", "europe-west9-docker.pkg.dev/claudeallouche/ahuza/ahuza:lasted"]
+  # Migrations run with the new image, before it receives traffic
+  - name: "europe-west9-docker.pkg.dev/claudeallouche/ahuza/ahuza:lasted"
+    entrypoint: "php"
+    args: ["/app/artisan", "migrate", "--force"]
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       [
