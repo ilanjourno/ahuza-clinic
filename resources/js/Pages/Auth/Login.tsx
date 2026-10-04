@@ -1,4 +1,4 @@
-import Logo from "@/Assets/images/logo.jpeg";
+import Logo from "@/Assets/images/logo.jpg";
 import Illustration from "@/Assets/images/illustration.jpeg";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { FormEventHandler, Fragment, useEffect } from "react";

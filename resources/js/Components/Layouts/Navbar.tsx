@@ -1,4 +1,5 @@
-import Logo from "@/Assets/images/logo.jpeg";
+import Logo from "@/Assets/images/logo.jpg";
+import { whatsappUrl } from "@/Constants/contact";
 import useTranslation from "@/Hooks/useTranslation";
 import { Link } from "@inertiajs/react";
 import classNames from "classnames";
@@ -134,9 +135,7 @@ const Navbar: FC<NavbarProps> = ({
                         </Offcanvas.Body>
                     </NavbarBootstrap.Offcanvas>
                     <a
-                        href={`whatsapp://send?text=${t(
-                            "whatsapp.message"
-                        )}&phone=+9720587260264`}
+                        href={whatsappUrl(t("whatsapp.message"))}
                         className={classNames("mb-0", {
                             "text-white": variant === "dark" && transparent,
                             "text-dark": variant === "light" || !transparent,

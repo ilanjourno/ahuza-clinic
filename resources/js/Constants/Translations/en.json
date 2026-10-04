@@ -21,16 +21,16 @@
     "about": {
         "first": "I am Dr. Claude Allouche, a gynecologist-obstetrician in Raanana and Netanya, with many years of experience and a remarkable background in various fields of my specialty.",
         "second": "With French training, after studying medicine in Paris and completing my obstetrics and gynecology residency in Caen, I worked for over 25 years as a hospital practitioner at the Évreux hospital in Normandy, where I headed the Women's-Mother-Children's division of the Évreux and Vernon hospitals.",
-        "last": "After making aliyah at the end of 2018, I now work as a gynecologist-obstetrician in Israel at the Laniado Hospital, at the Clalit Health Fund in Netanya, and in my private practice at the Ahuza Clinic in Raanana. In my Raanana clinic, a range of services is offered, including.",
+        "last": "After making aliyah at the end of 2018, I now work as a gynecologist-obstetrician in Israel at the Laniado Hospital, at the Clalit Health Fund in Netanya, and in my private practices: Clinic 4 You in Raanana and Migdal Hahalutzim in Netanya. In my practices, a range of services is offered, including.",
         "plus": "Gynecological follow-up with IUD placement, contraception monitoring, smear tests, and gynecological ultrasounds. Pregnancy follow-up, obstetric ultrasounds, and care for pregnant women.",
         "tab1": "Gynecological follow-up with IUD placement, contraception monitoring, smear tests, and gynecological ultrasounds.",
         "tab2": "Pregnancy follow-up, obstetric ultrasounds, and care for pregnant women.",
         "tab3": "Menopause follow-up and treatment."
     },
     "clinic": {
-        "title": "Ahuza Clinic in",
+        "title": "Clinic 4 You in",
         "city": "Ra'anana.",
-        "description": "At my Ahuza Clinic in Ra'anana, I support my patients with flexibility and patience, personal attention, and great availability throughout the three stages of a woman's life:",
+        "description": "At Clinic 4 You in Ra'anana, as well as in Netanya, I support my patients with flexibility and patience, personal attention, and great availability throughout the three stages of a woman's life:",
         "tabs1": {
             "title": "Before pregnancy",
             "description": "To ensure gynecological follow-up, perform smear tests, and establish personalized contraception tailored to each of you."
@@ -52,6 +52,7 @@
     "articles": {
         "title": "My articles",
         "description": "Find my latest articles here.",
+        "allDescription": "Find all the articles I have published here.",
         "plus": "See all articles"
     },
     "faqs": {
@@ -64,11 +65,13 @@
         "fullname": "Your full name:",
         "emailLabel": "Your email address:",
         "message": "Message:",
-        "address": "Address:",
+        "address": "Addresses:",
         "phone": "Phone:",
         "email": "Email:",
         "job": "Gynecologist-obstetrician",
         "send": "Send",
-        "messageAlert": "Your message has been sent."
+        "messageAlert": "Your message has been sent.",
+        "addressRaanana": "Clinic 4 You, 8 Hamasger St, Raanana",
+        "addressNetanya": "Migdal Hahalutzim, 6 Petah Tikva St, 10th floor, room 1002, Netanya"
     }
 }

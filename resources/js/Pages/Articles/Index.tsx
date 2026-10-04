@@ -1,7 +1,10 @@
 import ArticleTable from "@/Components/Table/ArticleTable";
+import useTranslation from "@/Hooks/useTranslation";
 import GuestLayout from "@/Layouts/GuestLayout";
 
 export default function ArticlesView() {
+    const { t } = useTranslation();
+
     return (
         <GuestLayout variant="light" transparent={false}>
             <div className="pattern-square"></div>
@@ -10,10 +13,9 @@ export default function ArticlesView() {
                     <div className="row">
                         <div className="col-lg-12 col-md-12 col-12">
                             <div className="text-center">
-                                <h1 className="mb-3">Mes articles</h1>
+                                <h1 className="mb-3">{t("articles.title")}</h1>
                                 <p className="mb-0">
-                                    Retrouvez ici tous les articles que j'ai
-                                    publié.
+                                    {t("articles.allDescription")}
                                 </p>
                             </div>
                         </div>

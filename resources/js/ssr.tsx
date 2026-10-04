@@ -7,13 +7,11 @@ import { RouteName } from "ziggy-js";
 import { route } from "../../vendor/tightenco/ziggy";
 import { store } from "./store";
 
-const appName = import.meta.env.VITE_APP_NAME || "Laravel";
-
 createServer((page) =>
     createInertiaApp({
         page,
         render: ReactDOMServer.renderToString,
-        title: (title) => `${title} - ${appName}`,
+        title: (title) => title,
         resolve: (name) =>
             resolvePageComponent(
                 `./Pages/${name}.tsx`,

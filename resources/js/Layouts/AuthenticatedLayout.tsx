@@ -1,4 +1,4 @@
-import Avatar from "@/Assets/images/avatar.jpeg";
+import Avatar from "@/Assets/images/avatar.jpg";
 import Footer from "@/Components/Layouts/Footer";
 import Navigation from "@/Components/Layouts/Navbar";
 import { User } from "@/types";

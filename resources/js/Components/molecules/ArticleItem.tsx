@@ -1,4 +1,4 @@
-import Avatar from "@/Assets/images/avatar.jpeg";
+import Avatar from "@/Assets/images/avatar.jpg";
 import useTranslation from "@/Hooks/useTranslation";
 import Article from "@/Interfaces/Article";
 import { Link } from "@inertiajs/react";

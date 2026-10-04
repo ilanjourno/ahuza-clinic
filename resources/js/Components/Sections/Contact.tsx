@@ -1,4 +1,5 @@
-import Avatar from "@/Assets/images/avatar.jpeg";
+import Avatar from "@/Assets/images/avatar.jpg";
+import { whatsappUrl } from "@/Constants/contact";
 import useTranslation from "@/Hooks/useTranslation";
 import { ContactForm } from "@/Interfaces/Contact";
 import { Transition } from "@headlessui/react";
@@ -166,8 +167,11 @@ export default function Contact() {
                             </div>
                             <div className="ms-2">
                                 <h5 className="mb-0">{t("contact.address")}</h5>
-                                <small>
-                                    Ahuza Clinic 133 Ahuza, Ra`anana, Israel
+                                <small className="d-block">
+                                    {t("contact.addressRaanana")}
+                                </small>
+                                <small className="d-block">
+                                    {t("contact.addressNetanya")}
                                 </small>
                             </div>
                         </div>
@@ -188,9 +192,7 @@ export default function Contact() {
                                 <h5 className="mb-0">{t("contact.phone")}</h5>
                                 <small>
                                     <a
-                                        href={`whatsapp://send?text=${t(
-                                            "whatsapp.message"
-                                        )}&phone=+9720587260264`}
+                                        href={whatsappUrl(t("whatsapp.message"))}
                                     >
                                         058-726-0264
                                     </a>

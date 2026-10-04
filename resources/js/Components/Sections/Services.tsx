@@ -1,6 +1,6 @@
-import Illustration1 from "@/Assets/images/illustration2.jpeg";
-import Illustration2 from "@/Assets/images/illustration3.jpeg";
-import Illustration3 from "@/Assets/images/illustration4.jpeg";
+import ClinicOffice from "@/Assets/images/clinic-office.jpg";
+import ClinicWaitingRoom from "@/Assets/images/clinic-waiting-room.jpg";
+import ClinicEntrance from "@/Assets/images/clinic-entrance.jpg";
 import useTranslation from "@/Hooks/useTranslation";
 import { Col, Container, Figure, Image, Nav, Row, Tab } from "react-bootstrap";
 
@@ -131,7 +131,8 @@ export default function Services() {
                                     <div className="position-relative scene">
                                         <Figure>
                                             <Image
-                                                src={Illustration1}
+                                                src={ClinicOffice}
+                                                alt="Clinic 4 You"
                                                 fluid
                                                 className="rounded-3"
                                             />
@@ -142,7 +143,8 @@ export default function Services() {
                                     <div className="position-relative scene">
                                         <Figure>
                                             <Image
-                                                src={Illustration2}
+                                                src={ClinicWaitingRoom}
+                                                alt="Clinic 4 You"
                                                 fluid
                                                 className="rounded-3"
                                             />
@@ -153,7 +155,8 @@ export default function Services() {
                                     <div className="position-relative scene">
                                         <Figure>
                                             <Image
-                                                src={Illustration3}
+                                                src={ClinicEntrance}
+                                                alt="Clinic 4 You"
                                                 fluid
                                                 className="rounded-3"
                                             />

@@ -21,16 +21,16 @@
     "about": {
         "first": "Je suis le Dr Claude Allouche, gynécologue-obstétricien à Raanana et Netanya, avec de nombreuses années d'expérience et un parcours remarquable dans les différents domaines de ma spécialité.",
         "second": "De Formation française, après avoir fait mes études de médecine à Paris et mon internat de Gynecologie obstétrique à Caen , j’ai travaillé pendant plus de 25 ans en tant que praticien hospitalier à l’hôpital d’Évreux en Normandie, où j’ai dirigé le pôle Femme-mère-enfants des hôpitaux d’Évreux et de Vernon.",
-        "last": "Après avoir fait mon alya fin 2018 je travaille désormais comme médecin-gynécologue obstétricien en Israel à l'hôpital Laniado , à la koupat holim Clalit de Netanya et dans mon cabinet de la clinique Ahuza à Raanana . Dans ma clinique de Raanana, une gamme de services est proposée, notamment.",
+        "last": "Après avoir fait mon alya fin 2018 je travaille désormais comme médecin-gynécologue obstétricien en Israel à l'hôpital Laniado, à la koupat holim Clalit de Netanya et dans mes cabinets : la Clinic 4 You à Raanana et Migdal Hahaloutsim à Netanya. Dans mes cabinets, une gamme de services est proposée, notamment.",
         "plus": "Le suivi gynécologiques avec pose de stérilet , suivi de contraception, realisation de frottis, échographies gynécologiques. Le suivi de la grossesse, les échographies obstétricales et le traitement des femmes enceintes.",
         "tab1": "Suivis gynécologiques avec pose de stérilet , suivi de contraception, realisation de frottis, échographies gynécologiques.",
         "tab2": "Le suivi de la grossesse, les échographies obstétricales et le traitement des femmes enceintes.",
         "tab3": "Le suivi et le traitement de la ménopause."
     },
     "clinic": {
-        "title": "Ahuza Clinic à",
+        "title": "Clinic 4 You à",
         "city": "Ra'anana.",
-        "description": "Dans ma clinique Ahuza Clinic à Ra'anana, j'accompagne mes patientes avec flexibilité et patience, une attention personnelle et une grande disponibilité tout au long des 3 périodes de la vie d’une femme :",
+        "description": "Dans mon cabinet de la Clinic 4 You à Ra'anana, comme à Netanya, j'accompagne mes patientes avec flexibilité et patience, une attention personnelle et une grande disponibilité tout au long des 3 périodes de la vie d’une femme :",
         "tabs1": {
             "title": "Avant les grossesses",
             "description": "Pour assurer le suivi gynécologique, la réalisation de frottis et la mise en place d’une contraception personnalisée adaptée à chacune d’entre vous."
@@ -52,6 +52,7 @@
     "articles": {
         "title": "Mes articles",
         "description": "Retrouvez ici mes derniers articles.",
+        "allDescription": "Retrouvez ici tous les articles que j'ai publiés.",
         "plus": "Voir tous les articles"
     },
     "faqs": {
@@ -64,11 +65,13 @@
         "fullname": "Votre nom complet :",
         "emailLabel": "Votre adresse e-mail :",
         "message": "Message :",
-        "address": "Adresse :",
+        "address": "Adresses :",
         "phone": "Téléphone :",
         "email": "E-mail :",
         "job": "Gynécologue obstétricien",
         "send": "Envoyer",
-        "messageAlert": "Votre message a bien été envoyé."
+        "messageAlert": "Votre message a bien été envoyé.",
+        "addressRaanana": "Clinic 4 You, Hamasger 8, Raanana",
+        "addressNetanya": "Migdal Hahaloutsim, 6 rehov Petah Tikva, 10e étage, salle 1002, Netanya"
     }
 }

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
-import Logo from "@/Assets/images/logo.png";
+import Logo from "@/Assets/images/logo.jpg";
 
 const Footer: FC = () => {
     return (

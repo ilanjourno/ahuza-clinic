@@ -1,4 +1,5 @@
 import whatsapp from "@/Assets/images/whatsapp.png";
+import { whatsappUrl } from "@/Constants/contact";
 import useTranslation from "@/Hooks/useTranslation";
 import { Image } from "react-bootstrap";
 
@@ -23,9 +24,7 @@ export default function Whatsapp() {
                                 {t("whatsapp.description")}
                             </p>
                             <a
-                                href={`whatsapp://send?text=${t(
-                                    "whatsapp.message"
-                                )}&phone=+9720587260264`}
+                                href={whatsappUrl(t("whatsapp.message"))}
                                 className="btn btn-dark"
                             >
                                 058-726-0264
