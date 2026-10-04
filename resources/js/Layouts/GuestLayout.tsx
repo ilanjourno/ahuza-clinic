@@ -1,6 +1,7 @@
 import OgImage from "@/Assets/images/og-image.jpg";
 import Footer from "@/Components/Layouts/Footer";
 import Navigation, { NavbarProps } from "@/Components/Layouts/Navbar";
+import LANGUES from "@/Constants/langues";
 import {
     escapeAttr,
     metaDescription,
@@ -21,6 +22,7 @@ export default function GuestLayout({
     keywords,
     imageUrl,
     ogType = "website",
+    alternateLocales = LANGUES.map((langue) => langue.value),
 }: PropsWithChildren<{
     transparent?: boolean;
     variant?: NavbarProps["variant"];
@@ -29,10 +31,17 @@ export default function GuestLayout({
     title?: string;
     imageUrl?: string;
     ogType?: "website" | "article";
+    alternateLocales?: string[];
 }>) {
     const { t, locale } = useTranslation();
     const { ziggy } = usePage<PageProps>().props;
-    const currentUrl = route(route().current() as string, route().params);
+    const currentRoute = route().current() as string;
+    const currentUrl = route(currentRoute, route().params);
+    const urlIn = (lang: string) =>
+        route(currentRoute, { ...route().params, locale: lang });
+    const defaultLocale = alternateLocales.includes("fr")
+        ? "fr"
+        : alternateLocales[0];
     const summary = metaDescription(description || t("metaDescription"));
 
     // Inertia's <Head> does not escape values: every text goes through escapeAttr.
@@ -68,20 +77,18 @@ export default function GuestLayout({
                     )}
                 />
                 <meta property="og:locale" content={ogLocale(locale)} />
+                {alternateLocales.map((lang) => (
+                    <link
+                        key={lang}
+                        rel="alternate"
+                        hrefLang={lang}
+                        href={urlIn(lang)}
+                    />
+                ))}
                 <link
                     rel="alternate"
-                    hrefLang="fr"
-                    href={route("welcome", { locale: "fr" })}
-                />
-                <link
-                    rel="alternate"
-                    hrefLang="en"
-                    href={route("welcome", { locale: "en" })}
-                />
-                <link
-                    rel="alternate"
-                    hrefLang="he"
-                    href={route("welcome", { locale: "he" })}
+                    hrefLang="x-default"
+                    href={urlIn(defaultLocale)}
                 />
             </Head>
             <Navigation transparent={transparent} variant={variant} />

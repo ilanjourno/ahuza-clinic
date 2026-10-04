@@ -7,8 +7,9 @@ import { Col, Container, Row } from "react-bootstrap";
 const ArticleShow: FC<
     PageProps<{
         article: Article;
+        availableLocales: string[];
     }>
-> = ({ article }) => {
+> = ({ article, availableLocales }) => {
     return (
         <GuestLayout
             variant="light"
@@ -17,6 +18,7 @@ const ArticleShow: FC<
             description={article.traductions[0].traduction.description}
             keywords={article.keywords.map((keyword) => keyword.label)}
             imageUrl={article.traductions[0].traduction.illustration?.link}
+            alternateLocales={availableLocales}
         >
             <div className="pattern-square"></div>
             <div className="py-xl-9 py-4">

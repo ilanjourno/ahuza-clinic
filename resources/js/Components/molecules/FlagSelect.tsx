@@ -5,17 +5,21 @@ import { PageProps } from "@/types";
 import Article from "@/Interfaces/Article";
 
 const FlagSelect = () => {
-    const { locale, article } = usePage<
+    const { locale, article, availableLocales } = usePage<
         PageProps<{
             article?: Article;
+            availableLocales?: string[];
         }>
     >().props;
 
+    // On an article page, only offer the translations that exist.
     const languages = [
         { code: "fr", label: "Français" },
         { code: "en", label: "English" },
         { code: "he", label: "עברית" },
-    ];
+    ].filter(
+        (lang) => !availableLocales || availableLocales.includes(lang.code)
+    );
 
     return (
         <div className="d-flex gap-2 align-items-center">
