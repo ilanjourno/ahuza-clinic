@@ -34,3 +34,8 @@ export const metaDescription = (text: string, max = 155): string => {
     const lastSpace = cut.lastIndexOf(" ");
     return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + "…";
 };
+
+// The article page renders its title as the only <h1>: headings typed in the
+// editor move down one level.
+export const demoteHeadings = (html: string): string =>
+    html.replace(/<(\/?)h1(?=[\s>])/gi, "<$1h2");

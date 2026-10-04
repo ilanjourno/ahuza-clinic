@@ -23,6 +23,8 @@ export default function GuestLayout({
     imageUrl,
     ogType = "website",
     alternateLocales = LANGUES.map((langue) => langue.value),
+    publishedTime,
+    modifiedTime,
 }: PropsWithChildren<{
     transparent?: boolean;
     variant?: NavbarProps["variant"];
@@ -32,6 +34,8 @@ export default function GuestLayout({
     imageUrl?: string;
     ogType?: "website" | "article";
     alternateLocales?: string[];
+    publishedTime?: string | null;
+    modifiedTime?: string | null;
 }>) {
     const { t, locale } = useTranslation();
     const { ziggy } = usePage<PageProps>().props;
@@ -77,6 +81,18 @@ export default function GuestLayout({
                     )}
                 />
                 <meta property="og:locale" content={ogLocale(locale)} />
+                {publishedTime && (
+                    <meta
+                        property="article:published_time"
+                        content={publishedTime}
+                    />
+                )}
+                {modifiedTime && (
+                    <meta
+                        property="article:modified_time"
+                        content={modifiedTime}
+                    />
+                )}
                 {alternateLocales.map((lang) => (
                     <link
                         key={lang}

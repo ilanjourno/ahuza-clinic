@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { escapeAttr, metaDescription, ogLocale, pageTitle } from "./seo.ts";
+import { demoteHeadings, escapeAttr, metaDescription, ogLocale, pageTitle } from "./seo.ts";
 
 test("escapeAttr neutralises characters that break an HTML attribute", () => {
     assert.equal(
@@ -30,4 +30,11 @@ test("ogLocale maps site locales to Open Graph locales", () => {
     assert.equal(ogLocale("fr"), "fr_FR");
     assert.equal(ogLocale("en"), "en_US");
     assert.equal(ogLocale("he"), "he_IL");
+});
+
+test("demoteHeadings turns editor h1 into h2", () => {
+    assert.equal(
+        demoteHeadings('<h1 class="x">A</h1><p>b</p><H1>C</H1><h10>'),
+        '<h2 class="x">A</h2><p>b</p><h2>C</h2><h10>'
+    );
 });
