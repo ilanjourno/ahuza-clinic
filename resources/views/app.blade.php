@@ -13,6 +13,9 @@
         @routes
         @viteReactRefresh
         @vite(['resources/js/app.tsx', "resources/js/Pages/{$page['component']}.tsx"])
+        @isset($page['props']['schema'])
+            <script type="application/ld+json">{!! json_encode($page['props']['schema'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) !!}</script>
+        @endisset
         @inertiaHead
     </head>
     <body class="font-sans antialiased">

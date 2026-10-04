@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\SetLocale;
 use App\Models\Article;
+use App\Seo\StructuredData;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -48,6 +49,7 @@ class ArticleController extends Controller
         return Inertia::render('Articles/Show', [
             'article' => $article,
             'availableLocales' => $availableLocales,
+            'schema' => StructuredData::article($article, $article->traductions->first(), $locale),
         ]);
     }
 }
