@@ -1,0 +1,9 @@
+.git
+node_modules
+vendor
+public/build
+public/hot
+public/sitemap.xml
+bootstrap/ssr
+storage/logs/*
+.superpowers
