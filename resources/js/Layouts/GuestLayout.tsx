@@ -40,9 +40,9 @@ export default function GuestLayout({
     const { t, locale } = useTranslation();
     const { ziggy } = usePage<PageProps>().props;
     const currentRoute = route().current() as string;
-    const currentUrl = route(currentRoute, route().params);
+    const currentUrl = route(currentRoute, route().routeParams);
     const urlIn = (lang: string) =>
-        route(currentRoute, { ...route().params, locale: lang });
+        route(currentRoute, { ...route().routeParams, locale: lang });
     const defaultLocale = alternateLocales.includes("fr")
         ? "fr"
         : alternateLocales[0];

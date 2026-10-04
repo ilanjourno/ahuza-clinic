@@ -35,8 +35,12 @@ export default function Blog() {
                 </Row>
                 <div className="table-responsive-lg">
                     <Row className="g-5 flex-nowrap pb-4 pb-lg-0 me-5 me-lg-0">
-                        {articles.map((article) => (
-                            <ArticleItem key={article.id} article={article} />
+                        {articles.map((article, index) => (
+                            <ArticleItem
+                                key={article.id}
+                                article={article}
+                                eager={index < 3}
+                            />
                         ))}
                     </Row>
                 </div>

@@ -9,9 +9,10 @@ import { Col, Figure, Image } from "react-bootstrap";
 
 interface ArticleItemProps {
     article: Article;
+    eager?: boolean;
 }
 
-const ArticleItem: FC<ArticleItemProps> = ({ article }) => {
+const ArticleItem: FC<ArticleItemProps> = ({ article, eager = false }) => {
     const { locale } = useTranslation();
     const traduction = article.traductions[0].traduction;
     const href = route("articles.show", { article: article.slug, locale });
@@ -30,7 +31,7 @@ const ArticleItem: FC<ArticleItemProps> = ({ article }) => {
                         height={400}
                         style={{ objectFit: "cover" }}
                         alt={traduction.title}
-                        loading="lazy"
+                        loading={eager ? "eager" : "lazy"}
                         decoding="async"
                         rounded
                     />

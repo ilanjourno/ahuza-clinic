@@ -124,8 +124,12 @@ const ArticleTable: FC = () => {
                 </Row>
 
                 <Row className="gy-lg-7 gy-5">
-                    {articleList.map((article) => (
-                        <ArticleItem key={article.id} article={article} />
+                    {articleList.map((article, index) => (
+                        <ArticleItem
+                            key={article.id}
+                            article={article}
+                            eager={index < 3}
+                        />
                     ))}
                 </Row>
 
