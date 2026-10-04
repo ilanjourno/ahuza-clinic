@@ -2361,6 +2361,9 @@ RUN apt-get update && apt-get install -y \
     nginx \
     supervisor \
     libpq-dev \
+    libjpeg62-turbo-dev \
+    libwebp-dev \
+    && docker-php-ext-configure gd --with-jpeg --with-webp \
     && docker-php-ext-install pdo_pgsql pdo_mysql mbstring exif pcntl bcmath gd opcache \
     && rm -rf /var/lib/apt/lists/*
 
@@ -2468,13 +2471,15 @@ curl -s -o /dev/null -D - -H 'Accept-Encoding: gzip' http://localhost:8080/login
 CSS=$(curl -s http://localhost:8080/login | grep -o '/build/assets/app-[^"]*\.css' | head -1)
 curl -s -o /dev/null -D - -H 'Accept-Encoding: gzip' "http://localhost:8080$CSS" | grep -iE '^(content-encoding|cache-control):'
 curl -s -o /dev/null -w '%{http_code} %{content_type}\n' http://localhost:8080/llms.txt
+docker run --rm ahuza-local php -r 'exit((imagetypes() & (IMG_JPG|IMG_WEBP)) === (IMG_JPG|IMG_WEBP) ? 0 : 1);' && echo "gd jpeg+webp ok"
 docker stop ahuza-local
 ```
 
 Expected :
 - page `/login` : `content-encoding: gzip`, `x-content-type-options: nosniff`, `strict-transport-security: max-age=31536000`, et aucune ligne `x-powered-by` ;
 - CSS : `content-encoding: gzip` et `cache-control: public, max-age=31536000, immutable` ;
-- `llms.txt` : `200 text/plain`.
+- `llms.txt` : `200 text/plain; charset=utf-8` ;
+- `gd jpeg+webp ok` (GD compilé avec JPEG et WebP, sinon tout upload JPEG/WebP échoue).
 
 La page `/login` ne touche pas la base de données. Le build prend environ 10 minutes.
 
@@ -2851,6 +2856,11 @@ PREVIOUS_REVISION=$(gcloud run services describe ahuza --project=claudeallouche 
 echo "$PREVIOUS_REVISION"
 ```
 
+Pré-déploiement :
+- (a) mettre `LOG_CHANNEL=stderr` dans le `.env` du Secret Manager, pour que les erreurs Laravel atteignent Cloud Logging ;
+- (b) vérifier les variables d'environnement du service : `gcloud run services describe ahuza --project=claudeallouche --region=europe-west1 --format="value(spec.template.spec.containers[0].env)"`. Celles définies sur le service sont invisibles pour php-fpm (`clear_env`) : seul le `.env` compte ;
+- (c) après le déploiement, téléverser une image JPEG depuis le tableau de bord et l'ouvrir.
+
 - [ ] **Step 2: Pousser et déployer depuis un export propre de `main`**
 
 ```bash
@@ -2873,6 +2883,8 @@ curl -s -o /dev/null -D - -H 'Accept-Encoding: gzip' $D/fr | grep -iE '^(content
 curl -s $D/fr | grep -c 'application/ld+json'
 curl -s $D/sitemap.xml | grep -c 'xhtml:link'
 curl -s -o /dev/null -w '%{http_code}\n' $D/llms.txt
+curl -s $D/sitemap.xml | grep -c '<loc>http://'
+curl -s $D/fr | grep -o 'rel="canonical" href="https://claude-allouche.com/fr"'
 ```
 
 Expected :
@@ -2881,7 +2893,9 @@ Expected :
 - `content-encoding: gzip` et `strict-transport-security`, sans `x-powered-by` ;
 - `1` ;
 - un nombre supérieur à 0 ;
-- `200`.
+- `200` ;
+- `0` (aucune URL `http://` dans le sitemap) ;
+- une occurrence de `rel="canonical" href="https://claude-allouche.com/fr"`.
 
 Relancer ensuite le crawl et Lighthouse de l'audit (`claude-allouche.com-audit/`). Valider `/fr` et un article sur https://validator.schema.org et https://search.google.com/test/rich-results.
 
