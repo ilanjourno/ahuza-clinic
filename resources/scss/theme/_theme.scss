@@ -2,7 +2,6 @@
 
 // custom classes
 
-@import "./components/docs";
 @import "./components/reboot";
 @import "./components/avatar";
 @import "./components/tansition";
@@ -21,12 +20,3 @@
 @import "./components/gallery";
 @import "./components/badge";
 @import "./components/flex";
-
-// vendor classes
-@import "./vendors/prism/prism";
-@import "./vendors/swiper/swiper";
-@import "./vendors/plyr/plyr";
-@import "./vendors/intl/intl";
-
-// darkmode classes
-@import "darkmode";
